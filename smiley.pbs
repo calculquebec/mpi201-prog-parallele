@@ -2,8 +2,8 @@
 #PBS -l nodes=1:ppn=...
 #PBS -l walltime=...
 #PBS -V
-#PBS -N hello
+#PBS -N smiley
 
 cd $PBS_O_WORKDIR
 
-mpiexec -n 2 ./smiley > smiley.out
+mpiexec -n # ./smiley > smiley.out
