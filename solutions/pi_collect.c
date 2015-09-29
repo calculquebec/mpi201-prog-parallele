@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
         sum = 0.0;
         for (i = n - 1 - rank; i >= 0; i -= size) {
-            sum += (4.0 - 8.0 * (i & 1)) / (2.0 * i + 1);
+            sum += (4.0 - 8.0 * (i % 2)) / (2.0 * i + 1);
         }
 
         MPI_Reduce( &sum, &pi, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD );
