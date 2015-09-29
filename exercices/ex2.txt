@@ -1,0 +1,8 @@
+Exercice 2
+----------
+
+Écrivez un programme MPI (C ou Fortran) qui calcule en parallèle le carré des
+entiers de 1 à 64 et envoie les résultats à tous les processus.
+
+Tous les processus doivent afficher les valeurs calculées localement ainsi que
+les valeurs reçues.

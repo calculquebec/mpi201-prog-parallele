@@ -1,0 +1,9 @@
+Exercice 1
+----------
+
+Écrivez un programme MPI (C ou Fortran) qui lit du clavier la taille n (maximum
+10) d'un tableau que le maître (processus 0) doit remplir du carré des entiers
+de 1 à n et envoyer à tous les esclaves.
+
+Tous les processus doivent afficher leur rang dans le communicateur ainsi que
+les valeurs reçues.
