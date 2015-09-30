@@ -4,8 +4,8 @@ IMPLICIT NONE
 INCLUDE 'mpif.h'
 
 INTEGER, PARAMETER :: N = 8400
-INTEGER*8, ALLOCATABLE :: A(:), B(:), Aloc(:), Bloc(:)
-INTEGER*8 :: prod, prodloc
+INTEGER(selected_int_kind(18)), ALLOCATABLE :: A(:), B(:), Aloc(:), Bloc(:)
+INTEGER(selected_int_kind(18)) :: prod, prodloc
 INTEGER :: size, rank, ierr, nloc, i
 
     CALL MPI_Init( ierr )
