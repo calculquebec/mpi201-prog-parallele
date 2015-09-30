@@ -1,10 +1,9 @@
 *.o
+advec.c
 bonjour
-allgather
-bcast
 integral10.dat
+integrale10.f90
 integrale
 integrale10
 interblocage
 para_integrale
-rotation
