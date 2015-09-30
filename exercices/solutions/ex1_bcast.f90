@@ -1,7 +1,7 @@
 program bcast
 use mpi
 integer, parameter :: nmax=10
-integer i,ierr,proc,nproc, A(nmax)
+integer i,ierr,n,proc,nproc, A(nmax)
 
 call MPI_Init(ierr)
 call MPI_COMM_SIZE(MPI_COMM_WORLD, nproc, ierr)
