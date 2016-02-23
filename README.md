@@ -1,2 +1,2 @@
 # cq-formation-intro-mpi
-Introduction à MPI
+Introduction à la parallélisation par MPI
