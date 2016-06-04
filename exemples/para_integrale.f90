@@ -2,7 +2,7 @@ subroutine integrale(dpint,N,proc,nproc)
 use mpi
 double precision :: dpint, dpintloc
 integer N,proc,nproc,i,ierr
-double precision, parameter:: & pi=3.141592653589793d0
+double precision, parameter:: pi=3.141592653589793d0
 dpintloc = 0.0d0
 do i=proc*N/nproc, (proc+1)*N/nproc - 1
    dpintloc = dpintloc + sin(i*(pi/N))**2 * exp(-i*(pi/N)) *(pi/N)

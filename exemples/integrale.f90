@@ -1,7 +1,7 @@
 subroutine integrale(dpint,N)
 double precision dpint
 integer N,i
-double precision, parameter:: & pi=3.141592653589793d0
+double precision, parameter:: pi=3.141592653589793d0
 dpint = 0.0d0
 do i=0,N-1
    dpint = dpint + sin(i*(pi/N))**2 * exp(-i*(pi/N)) *(pi/N)
