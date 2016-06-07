@@ -1,7 +1,6 @@
 PROGRAM PI_collect
-
+use mpi
 IMPLICIT NONE
-INCLUDE 'mpif.h'
 
 DOUBLE PRECISION PI25, sum, pi, t1, t2
 INTEGER rank, size, n, i, ierr

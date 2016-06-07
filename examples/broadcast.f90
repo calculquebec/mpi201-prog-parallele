@@ -1,7 +1,6 @@
 PROGRAM broadcast
-
+use mpi
 IMPLICIT NONE
-INCLUDE 'mpif.h'
 
 INTEGER ierr, myid, nproc, root
 INTEGER status(MPI_STATUS_SIZE)

@@ -1,7 +1,6 @@
 PROGRAM sendRecvEx1
-
+use mpi
 IMPLICIT NONE
-INCLUDE 'mpif.h'
 
 INTEGER :: rank, buffer, error, status( MPI_status_size )
 

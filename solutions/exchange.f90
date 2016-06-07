@@ -1,7 +1,6 @@
 PROGRAM exchange
-
+use mpi
 IMPLICIT NONE
-INCLUDE 'mpif.h'
 
 INTEGER :: rank
 REAL :: A(2), B(2)
