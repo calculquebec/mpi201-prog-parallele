@@ -1,0 +1,11 @@
+#!/bin/bash
+#PBS -l nodes=1:ppn=4
+#PBS -l walltime=00:05:00
+#PBS -N smileys
+#PBS -A class
+
+cd $PBS_O_WORKDIR
+
+module load iomkl/2015b Python/2.7.10
+
+mpiexec -n 4 python smileys.py > smileys.out
