@@ -1,7 +1,7 @@
 PROGRAM smileys
 
 IMPLICIT NONE
-INCLUDE 'mpif.h'
+USE mpi
 
 INTEGER ierr, rank, size
 

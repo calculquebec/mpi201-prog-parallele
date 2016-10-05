@@ -1,7 +1,7 @@
 PROGRAM dot_product
 
 IMPLICIT NONE
-INCLUDE 'mpif.h'
+USE mpi
 
 INTEGER, PARAMETER :: N = 8400
 INTEGER(selected_int_kind(18)), ALLOCATABLE :: A(:), B(:), Aloc(:), Bloc(:)

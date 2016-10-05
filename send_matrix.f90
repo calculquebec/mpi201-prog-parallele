@@ -1,7 +1,7 @@
 PROGRAM matrix
 
 IMPLICIT NONE
-INCLUDE 'mpif.h'
+USE mpi
 
 INTEGER :: rank, count, dest, source, tag
 INTEGER :: matrix44(4,4), A(4,4), i
