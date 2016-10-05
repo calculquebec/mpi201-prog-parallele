@@ -1,7 +1,7 @@
 PROGRAM gather
 
 IMPLICIT NONE
-INCLUDE 'mpif.h'
+USE mpi
 
 INTEGER ierr, myid, nproc, nsnd, i, root
 INTEGER status(MPI_STATUS_SIZE)

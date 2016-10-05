@@ -1,7 +1,7 @@
 PROGRAM reduce
 
 IMPLICIT NONE
-INCLUDE 'mpif.h'
+USE mpi
 
 INTEGER ierr, myid, nproc, root
 INTEGER status(MPI_STATUS_SIZE)
