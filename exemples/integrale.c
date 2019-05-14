@@ -7,18 +7,18 @@ double integrale(int N, int proc, int nproc)
     int i;
     int debut = (proc) * N / nproc;
     int fin = (1+proc) * N / nproc;
-    double dpint = 0.0, total;
+    double dpint = 0.0, dpintloc = 0.0;
     const double larg = M_PI / N;
 
     for (i = debut; i < fin; i++) {
         double sinCarre = sin(i*larg) * sin(i*larg);
-        dpint += sinCarre * exp(-i*larg) * larg;
+        dpintloc += sinCarre * exp(-i*larg) * larg;
     }
 
-    MPI_Allreduce(&dpint, &total, 1, MPI_DOUBLE,
+    MPI_Allreduce(&dpintloc, &dpint, 1, MPI_DOUBLE,
                   MPI_SUM, MPI_COMM_WORLD);
 
-    return total;
+    return dpint;
 }
 
 int main(int argc, char **argv)
