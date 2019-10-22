@@ -1,16 +1,16 @@
 PROGRAM PI_collect
 
+USE mpi_f08
 IMPLICIT NONE
-USE mpi
 
 DOUBLE PRECISION PI25, sum, pi, t1, t2
-INTEGER rank, size, n, i, ierr
+INTEGER rank, size, n, i
 
 PARAMETER (PI25 = 3.141592653589793d0)
 
-    CALL MPI_Init( ierr )
-    CALL MPI_Comm_rank( MPI_COMM_WORLD, rank, ierr )
-    CALL MPI_Comm_size( MPI_COMM_WORLD, size, ierr )
+    CALL MPI_Init()
+    CALL MPI_Comm_rank( MPI_COMM_WORLD, rank)
+    CALL MPI_Comm_size( MPI_COMM_WORLD, size)
 
     DO
         IF( rank == 0 ) THEN
@@ -19,7 +19,7 @@ PARAMETER (PI25 = 3.141592653589793d0)
             t1 = MPI_WTIME()
         ENDIF
 
-        CALL MPI_Bcast( n, 1, MPI_INTEGER, 0, MPI_COMM_WORLD, ierr )
+        CALL MPI_Bcast( n, 1, MPI_INTEGER, 0, MPI_COMM_WORLD)
         IF ( n <= 0 ) EXIT
 
         sum = 0.0d0
@@ -27,7 +27,7 @@ PARAMETER (PI25 = 3.141592653589793d0)
             sum = sum + (4.0d0 - 8 * MOD(i, 2)) / (2 * DBLE(i) + 1)
         ENDDO
 
-        CALL MPI_Reduce( sum, pi, 1, MPI_DOUBLE_PRECISION, MPI_SUM, 0, MPI_COMM_WORLD, ierr )
+        CALL MPI_Reduce( sum, pi, 1, MPI_DOUBLE_PRECISION, MPI_SUM, 0, MPI_COMM_WORLD)
 
         IF (rank == 0) THEN
             t2 = MPI_Wtime()
@@ -36,7 +36,7 @@ PARAMETER (PI25 = 3.141592653589793d0)
         ENDIF
     ENDDO
 
-    CALL MPI_Finalize(ierr)
+    CALL MPI_Finalize()
 
 END PROGRAM pi_collect
 

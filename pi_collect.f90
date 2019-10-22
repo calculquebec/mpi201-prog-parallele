@@ -1,16 +1,16 @@
 PROGRAM PI_collect
 
+USE mpi_f08
 IMPLICIT NONE
-USE mpi
 
 DOUBLE PRECISION PI25, sum, pi
-INTEGER rank, size, n, i, ierr
+INTEGER rank, size, n, i
 
 PARAMETER (PI25 = 3.141592653589793d0)
 
-    CALL MPI_Init( ierr )
-    CALL MPI_Comm_rank( MPI_COMM_WORLD, rank, ierr )
-    CALL MPI_Comm_size( MPI_COMM_WORLD, size, ierr )
+    CALL MPI_Init()
+    CALL MPI_Comm_rank( MPI_COMM_WORLD, rank)
+    CALL MPI_Comm_size( MPI_COMM_WORLD, size)
 
     DO
         IF( rank == 0 ) THEN
@@ -33,7 +33,7 @@ PARAMETER (PI25 = 3.141592653589793d0)
         ENDIF
     ENDDO
 
-    CALL MPI_Finalize(ierr)
+    CALL MPI_Finalize()
 
 END PROGRAM pi_collect
 
