@@ -1,14 +1,14 @@
 PROGRAM exchange
 
+USE mpi_f08
 IMPLICIT NONE
-USE mpi
 
 INTEGER :: rank
 REAL :: A(2), B(2)
-INTEGER :: error, status(MPI_STATUS_SIZE)
+TYPE(MPI_Status) :: status
 
-    CALL MPI_Init( error )
-    CALL MPI_Comm_rank( MPI_COMM_WORLD, rank, error )
+    CALL MPI_Init( )
+    CALL MPI_Comm_rank( MPI_COMM_WORLD, rank )
 
     IF (rank == 0) THEN
         A=(/1.0,2.0/)
@@ -27,7 +27,7 @@ INTEGER :: error, status(MPI_STATUS_SIZE)
         WRITE(*,*) 'Process', rank, 'received A=', A
     END IF
 
-    CALL MPI_Finalize( error )
+    CALL MPI_Finalize( )
 
 END PROGRAM exchange
 
