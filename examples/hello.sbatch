@@ -2,7 +2,7 @@
 #SBATCH --ntasks=...             # number of MPI processes
 #SBATCH --mem-per-cpu=1024M      # memory; default unit is megabytes
 #SBATCH --time=0-00:05           # time (DD-HH:MM)
-#SBATCH --job-name=smiley
-#SBATCH --output=smiley.out
+#SBATCH --job-name=hello
+#SBATCH --output=hello.out
 
-srun -n # ./smiley
+srun -n # ./hello
