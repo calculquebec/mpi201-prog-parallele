@@ -1,13 +1,13 @@
 PROGRAM matrix
 
 IMPLICIT NONE
-USE mpi
+USE mpi_f08
 
 INTEGER :: rank, count, dest, source, tag
 INTEGER :: matrix44(4,4), A(4,4), i
-INTEGER :: error, status(MPI_STATUS_SIZE)
+TYPE(MPI_Status) :: status
 
-    CALL MPI_Init( error )
+    CALL MPI_Init( )
     CALL MPI_Comm_rank( ... )
 
     IF (rank == 0) THEN
@@ -31,7 +31,7 @@ INTEGER :: error, status(MPI_STATUS_SIZE)
         WRITE(*,*) 'Process', rank, 'received matrix=', matrix44
     END IF
 
-    CALL MPI_Finalize( error )
+    CALL MPI_Finalize( )
 
 END PROGRAM matrix
 
