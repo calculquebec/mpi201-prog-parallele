@@ -1,17 +1,17 @@
 PROGRAM smileys
 
+USE mpi_f08
 IMPLICIT NONE
-USE mpi
 
-INTEGER ierr, rank, size
+INTEGER rank, size
 
-CALL MPI_Init(ierr)
+CALL MPI_Init()
 
 CALL MPI_Comm_rank (MPI_COMM_WORLD, &
-                    rank, ierr)
+                    rank)
 
 CALL MPI_Comm_size (MPI_COMM_WORLD, &
-                    size, ierr)
+                    size)
 IF (rank == 0) THEN
     WRITE(*,*) rank, '/', size, '  :-|'
 ENDIF
@@ -25,5 +25,5 @@ IF (rank == 3) THEN
     WRITE(*,*) rank, '/', size, '  :-P'
 ENDIF
 
-CALL  MPI_Finalize(ierr)
+CALL  MPI_Finalize()
 END PROGRAM smileys
