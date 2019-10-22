@@ -1,20 +1,20 @@
 PROGRAM dot_product
 
+USE mpi_f08
 IMPLICIT NONE
-USE mpi
 
 INTEGER, PARAMETER :: N = 8400
 INTEGER(selected_int_kind(18)), ALLOCATABLE :: A(:), B(:), Aloc(:), Bloc(:)
 INTEGER(selected_int_kind(18)) :: prod, prodloc
-INTEGER :: size, rank, ierr, nloc, i
+INTEGER :: size, rank, nloc, i
 
-    CALL MPI_Init( ierr )
-    CALL MPI_Comm_size( MPI_COMM_WORLD, size, ierr )
-    CALL MPI_Comm_rank( MPI_COMM_WORLD, rank, ierr )
+    CALL MPI_Init( )
+    CALL MPI_Comm_size( MPI_COMM_WORLD, size )
+    CALL MPI_Comm_rank( MPI_COMM_WORLD, rank )
 
     IF (MOD(N, size) > 0) THEN
         WRITE(*,*) 'N must be a multiple of size'
-        CALL MPI_Abort( MPI_COMM_WORLD, 999, ierr )
+        CALL MPI_Abort( MPI_COMM_WORLD, 999 )
     ENDIF
 
     IF (rank == 0) THEN
@@ -43,7 +43,7 @@ INTEGER :: size, rank, ierr, nloc, i
         WRITE(*,*) 'Reference value = ', INT8(N) * (N + 1) * (N + 2) / 6
     ENDIF
 
-    CALL MPI_Finalize( ierr )
+    CALL MPI_Finalize( )
 
 END PROGRAM dot_product
 
