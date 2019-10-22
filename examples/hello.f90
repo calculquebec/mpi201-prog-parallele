@@ -1,15 +1,15 @@
 PROGRAM hello
 
-USE mpi
+USE mpi_f90
 IMPLICIT NONE
 
 REAL  a,b
 
-INTEGER err, rank, size
+INTEGER rank, size
 
-    CALL MPI_Init(err)
-    CALL MPI_Comm_rank (MPI_COMM_WORLD, rank, err)
-    CALL MPI_Comm_size (MPI_COMM_WORLD, size, err)
+    CALL MPI_Init()
+    CALL MPI_Comm_rank (MPI_COMM_WORLD, rank)
+    CALL MPI_Comm_size (MPI_COMM_WORLD, size)
 
     IF (rank == 0) THEN
 	a=SQRT(2.0)
@@ -23,5 +23,5 @@ INTEGER err, rank, size
 	WRITE(*,*) 'a,b=',a,b,'on proc',rank	
     ENDIF
 
-    CALL  MPI_Finalize(err)
+    CALL  MPI_Finalize()
 END PROGRAM hello
