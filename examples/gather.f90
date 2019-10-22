@@ -4,7 +4,6 @@ USE mpi_f08
 IMPLICIT NONE
 
 INTEGER myid, nproc, nsnd, i, root
-INTEGER status(MPI_STATUS_SIZE)
 REAL A(16), B(2)
 
     CALL MPI_Init()

@@ -4,7 +4,6 @@ USE mpi_f08
 IMPLICIT NONE
 
 INTEGER myid, nproc, root
-TYPE(MPI_Status) :: status
 REAL a(2)
 
     CALL MPI_Init()
