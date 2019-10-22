@@ -1,17 +1,17 @@
 PROGRAM broadcast
 
+USE mpi_f08
 IMPLICIT NONE
-USE mpi
 
-INTEGER ierr, myid, nproc, root
-INTEGER status(MPI_STATUS_SIZE)
+INTEGER myid, nproc, root
+TYPE(MPI_Status) :: status
 REAL a(2)
 
-    CALL MPI_Init(ierr)
+    CALL MPI_Init()
     CALL MPI_Comm_size(MPI_COMM_WORLD, &
-                       nproc, ierr)
+                       nproc)
     CALL MPI_Comm_rank(MPI_COMM_WORLD, &
-                       myid, ierr)
+                       myid)
     root = 0
 
     IF( myid == root ) THEN
@@ -20,10 +20,10 @@ REAL a(2)
     END IF
 
     CALL MPI_BCAST(a, 2, MPI_REAL, root, &
-                   MPI_COMM_WORLD, ierr)
+                   MPI_COMM_WORLD)
     WRITE(*,*) myid, ': a(1)=', a(1), &
                        'a(2)=', a(2)
-    CALL MPI_Finalize(ierr)
+    CALL MPI_Finalize()
 
 END PROGRAM broadcast
 
