@@ -10,12 +10,12 @@ int main (int argc, char * argv[]) {
     MPI_Comm_size( MPI_COMM_WORLD, &size );
 
     if (size >= 2 && rank == 0) {
-        MPI_Send( &buffer1, 1, MPI_INT, 1, 10, MPI_COMM_WORLD );
+        MPI_Ssend(&buffer1, 1, MPI_INT, 1, 10, MPI_COMM_WORLD );
         MPI_Recv( &buffer2, 1, MPI_INT, 1, 20, MPI_COMM_WORLD, &status );
     }
     if (size >= 2 && rank == 1) {
         MPI_Recv( &buffer1, 1, MPI_INT, 0, 10, MPI_COMM_WORLD, &status );
-        MPI_Send( &buffer2, 1, MPI_INT, 0, 20, MPI_COMM_WORLD );
+        MPI_Ssend(&buffer2, 1, MPI_INT, 0, 20, MPI_COMM_WORLD );
     }
 
     printf("Rank %d: done\n", rank);
