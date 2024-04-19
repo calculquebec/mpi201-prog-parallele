@@ -1,0 +1,29 @@
+title: MPI201 - Programmation parallèle avec MPI
+author: Équipe Calcul Québec
+copyright: 2024
+logo: images/logo.png
+
+# https://jupyterbook.org/content/execute.html
+execute:
+  execute_notebooks: 'off'
+
+# Information about where the book exists on the web
+repository:
+  url: https://github.com/calculquebec/mpi201-prog-parallele
+  branch: main
+
+# https://jupyterbook.org/structure/configure.html#exclude-pages-from-your-build
+exclude_patterns:
+  - README.md
+
+# https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+html:
+  favicon: images/logo.png
+  use_repository_button: true
+
+launch_buttons:
+  binderhub_url: ""
+
+sphinx:
+  config:
+    language: fr
