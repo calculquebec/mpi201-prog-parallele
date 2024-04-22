@@ -1,4 +1,5 @@
 # MPI201 - Programmation parallèle avec MPI
+
 Ce dépôt contient le matériel pour l'atelier
 *Introduction à la parallélisation par Message Passing Interface*,
 communément abrégé par **MPI**.
