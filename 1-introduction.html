@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="next" title="Références" href="99-references.html" />
-    <link rel="prev" title="Maîtriser les systèmes de calculs de l’Alliance" href="0-a_propos.html" />
+    <link rel="prev" title="Programmation parallèle avec MPI" href="0-a_propos.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="fr"/>
   </head>
@@ -174,7 +174,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="0-a_propos.html">
-                    Maîtriser les systèmes de calculs de l’Alliance
+                    Programmation parallèle avec MPI
                 </a>
             </li>
         </ul>
@@ -344,11 +344,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rappel-le-calcul-haute-performance">Rappel - le calcul haute performance</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differents-types-de-taches">Différents types de tâches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parallelisme-de-donnees">Parallélisme de données</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-a-memoire-distribuee">Machine à mémoire distribuée</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#des-questions-a-se-poser">Des questions à se poser</a></li>
 </ul>
             </nav>
@@ -363,73 +359,36 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Lien vers cette rubrique">#</a></h1>
-<section id="rappel-le-calcul-haute-performance">
-<h2>Rappel - le calcul haute performance<a class="headerlink" href="#rappel-le-calcul-haute-performance" title="Lien vers cette rubrique">#</a></h2>
-<p>Problématiques, solutions et préalables :</p>
-<ul class="simple">
-<li><p>Lorsqu’on doit lancer une <strong>grande quantité de calculs</strong>
-ou de <strong>traitements de données</strong>, l’utilisation d’une
-grappe de calcul haute performance devient nécessaire.</p></li>
-<li><p>Puisque les <strong>ressources</strong> sont <strong>partagées et en grande demande</strong>,
-chaque tâche doit être soumise à un ordonnanceur de tâches.</p></li>
-<li><p>Il devient donc nécessaire <strong>d’estimer à l’avance les ressources</strong>
-qui seront réservées lors de l’exécution d’un calcul.</p></li>
-</ul>
-</section>
-<section id="differents-types-de-taches">
-<h2>Différents types de tâches<a class="headerlink" href="#differents-types-de-taches" title="Lien vers cette rubrique">#</a></h2>
-<p>Deux grandes catégories de tâches qui travaillent sur un même problème :
+<p>Il y a deux grandes catégories de tâches
+qui travaillent sur un même problème :
 <img alt="Séquentiel vs parallel" src="_images/serial-vs-parallel.svg" /></p>
-<p>Parmi les tâches séquentielles, il existe aussi le calcul vectoriel.</p>
-<ul class="simple">
-<li><p>Description : <strong>une même opération</strong> sur des vecteurs de données</p></li>
-<li><p>Ressources : un processeur moderne ou un <strong>accélérateur</strong> (GPU)</p></li>
-</ul>
-<p><img alt="Calcul vectoriel" src="images/calcul-vectoriel.svg" /></p>
-<section id="parallelisme-de-donnees">
-<h3>Parallélisme de données<a class="headerlink" href="#parallelisme-de-donnees" title="Lien vers cette rubrique">#</a></h3>
-<ul class="simple">
-<li><p>Beaucoup de données à traiter de manière indépendante</p></li>
-<li><p><strong>Plusieurs tâches séquentielles en simultané</strong></p>
-<ul>
-<li><p>Utilisation de <strong>lots de tâches</strong></p></li>
-<li><p>Ou une tâche parallèle qui partitionne les données en différents problèmes à traiter sur des processeurs différents</p></li>
-</ul>
-</li>
-</ul>
-<p><img alt="Parallélisme de données" src="images/data-parallelism.svg" /></p>
-</section>
+<p>Or, les superordinateurs modernes consistent en un <strong>grand nombre de
+serveurs</strong> de calcul contenant chacun <strong>plusieurs processeurs</strong>
+qui doivent se <strong>coordonner</strong> pour exécuter un programme parallèle.</p>
+<p><img alt="Béluga CQ branchements 3" src="https://live.staticflickr.com/65535/49019703558_3c49a9766e.jpg" /></p>
+<p>MPI est la méthode la plus <strong>courante et portable</strong> de
+paralléliser un programme s’exécutant sur plusieurs serveurs.</p>
+<section id="machine-a-memoire-distribuee">
+<h2>Machine à mémoire distribuée<a class="headerlink" href="#machine-a-memoire-distribuee" title="Lien vers cette rubrique">#</a></h2>
+<p><img alt="Machine à mémoire distribuée - serveurs" src="_images/distributed-memory-hardware.svg" /></p>
+<p>Des variables en apparence identiques sont en fait des
+<strong>instances totalement différentes dans des processus différents</strong>.
+Par conséquent, il devient nécessaire d’établir un moyen de
+communication entre les processus pour <strong>transférer des données</strong>.</p>
+<p><img alt="Machine à mémoire distribuée - processus" src="_images/distributed-memory-processes.svg" /></p>
 </section>
 <section id="des-questions-a-se-poser">
 <h2>Des questions à se poser<a class="headerlink" href="#des-questions-a-se-poser" title="Lien vers cette rubrique">#</a></h2>
 <ul class="simple">
-<li><p>Quel <strong>type de calculs</strong> effectuez-vous?</p>
+<li><p>Pourquoi diviser le travail sur plusieurs serveurs?</p>
 <ul>
-<li><p>Séquentiel ou parallel?</p>
-<ul>
-<li><p>Peut-être vectoriel?</p></li>
+<li><p>Possibilité d’accélérer un calcul</p></li>
+<li><p>Mémoire-vive limitée sur chaque serveur</p></li>
 </ul>
 </li>
-<li><p>Traiter beaucoup de petits fichiers ou quelques grands fichiers?</p></li>
-</ul>
-</li>
-<li><p>Quelles <strong>ressources</strong> vont être consommées?</p>
+<li><p>Comment envoyer et recevoir des données entre les processus?</p>
 <ul>
-<li><p>Quelles ressources choisir?</p></li>
-<li><p>Quelle quantité de ressources?</p></li>
-</ul>
-</li>
-<li><p>Comment <strong>planifier le stockage</strong> nécessaire?</p>
-<ul>
-<li><p>Avez-vous un plan de gestion des données actives?</p></li>
-<li><p>Qui devrait accéder à quoi?</p></li>
-<li><p>Quels espaces de stockage utiliser?</p></li>
-<li><p>Quand devriez-vous archiver certaines données?</p></li>
-</ul>
-</li>
-<li><p>Comment <strong>lancer des tâches</strong>?</p>
-<ul>
-<li><p>Comment en faire le suivi?</p></li>
+<li><p>C’est ce que nous allons voir dans les chapitres suivants!</p></li>
 </ul>
 </li>
 </ul>
@@ -472,7 +431,7 @@ qui seront réservées lors de l’exécution d’un calcul.</p></li>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">précédent</p>
-        <p class="prev-next-title">Maîtriser les systèmes de calculs de l’Alliance</p>
+        <p class="prev-next-title">Programmation parallèle avec MPI</p>
       </div>
     </a>
     <a class="right-next"
@@ -500,11 +459,7 @@ qui seront réservées lors de l’exécution d’un calcul.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rappel-le-calcul-haute-performance">Rappel - le calcul haute performance</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differents-types-de-taches">Différents types de tâches</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parallelisme-de-donnees">Parallélisme de données</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-a-memoire-distribuee">Machine à mémoire distribuée</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#des-questions-a-se-poser">Des questions à se poser</a></li>
 </ul>
   </nav></div>
