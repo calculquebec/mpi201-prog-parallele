@@ -368,7 +368,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-1-premier-lancement">Exercice #1 - Premier lancement</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partage-du-travail">Partage du travail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-communications-via-mpi">Les communications via MPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-de-donnees">Types de données</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-de-communications">Types de communications</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -458,10 +462,11 @@ processus appelle la fonction <code class="docutils literal notranslate"><span c
 <section id="parallelisation-explicite">
 <h2>Parallélisation explicite<a class="headerlink" href="#parallelisation-explicite" title="Lien vers cette rubrique">#</a></h2>
 <ul class="simple">
-<li><p>C’est la responsabilité du programmeur de dire à chaque processus
-ce qu’il doit faire selon son <em>rang</em> dans la liste des processus</p></li>
-<li><p>Chaque processus échange avec les
-autres les données dont ils ont besoin</p></li>
+<li><p>C’est la responsabilité de la programmeuse ou du
+programmeur de dire à chaque processus ce qu’il doit
+faire selon son <em>rang</em> dans la liste des processus</p></li>
+<li><p>Chaque processus échange avec les autres les données
+dont ils ont besoin pour résoudre un problème</p></li>
 <li><p>Un code source appelant la bibliothèque MPI utilise donc (en
 général) le concept de programme unique travaillant sur des
 données multiples (<em>Single Program, Multiple Data</em> ou SPMD)</p></li>
@@ -648,16 +653,77 @@ avec l’exécutable compilé ou avec <code class="docutils literal notranslate"
 </ol>
 </section>
 </section>
-<section id="partage-du-travail">
-<h2>Partage du travail<a class="headerlink" href="#partage-du-travail" title="Lien vers cette rubrique">#</a></h2>
-<p>Maintenant que chaque processus connaît
-sa place dans le communicateur, il peut :</p>
+<section id="les-communications-via-mpi">
+<h2>Les communications via MPI<a class="headerlink" href="#les-communications-via-mpi" title="Lien vers cette rubrique">#</a></h2>
+<section id="types-de-donnees">
+<h3>Types de données<a class="headerlink" href="#types-de-donnees" title="Lien vers cette rubrique">#</a></h3>
+<p>En C :</p>
 <ul class="simple">
-<li><p><strong>effectuer la partie du travail</strong> correspondant
-à son numéro de processus (le <em>rang</em>),</p></li>
-<li><p><strong>communiquer aux autres</strong> processus le résultat de son travail,</p></li>
-<li><p><strong>recevoir des autres</strong> le résultat de leur travail.</p></li>
+<li><p>Les fonctions MPI transférant des données sont conçues de façon
+générique et peuvent donc traiter des données de différents types</p></li>
+<li><p>Par exemple, en C/C++, pour envoyer des nombres à
+virgule flottante à double précision, on utilisera les
+fonctions de communication avec l’argument <code class="docutils literal notranslate"><span class="pre">MPI_DOUBLE</span></code></p></li>
+<li><p>On peut passer des scalaires ou des vecteurs, mais
+on doit indiquer le nombre d’éléments du type indiqué</p></li>
 </ul>
+<p>Les principaux
+<a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#page=76">types de données</a> sont :</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type en C/C++</p></th>
+<th class="head"><p>Constante MPI</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">char</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MPI_CHAR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">short</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MPI_SHORT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MPI_INT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MPI_LONG</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MPI_FLOAT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MPI_DOUBLE</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>En Python :</p>
+<ul class="simple">
+<li><p>La bibliothèque <code class="docutils literal notranslate"><span class="pre">mpi4py</span></code>
+<a class="reference external" href="https://fr.wikipedia.org/wiki/S%C3%A9rialisation"><em>sérialise</em></a>
+automatiquement tout objet et envoie simplement un vecteur d’octets</p></li>
+<li><p>À la réception d’un message, l’objet est reconstitué</p></li>
+<li><p>La gestion des types se fait donc automatiquement</p></li>
+</ul>
+</section>
+<section id="types-de-communications">
+<h3>Types de communications<a class="headerlink" href="#types-de-communications" title="Lien vers cette rubrique">#</a></h3>
+<p>Il y a deux grands types de communications :</p>
+<ul class="simple">
+<li><p><strong>Communications point-à-point</strong>
+(<a class="reference internal" href="#3-point-a-point.ipynb"><span class="xref myst">chapitre 3</span></a>) :
+deux processus d’un même communicateur
+communiquent au moyen de deux actions :</p>
+<ul>
+<li><p>Un envoi</p></li>
+<li><p>Une réception</p></li>
+</ul>
+</li>
+<li><p><strong>Communications collectives</strong>
+(<a class="reference internal" href="#4-collectives.ipynb"><span class="xref myst">chapitre 4</span></a>) :
+tous les processus d’un même communicateur
+appellent la même fonction et communiquent ensemble</p></li>
+</ul>
+</section>
 </section>
 </section>
 
@@ -748,7 +814,11 @@ sa place dans le communicateur, il peut :</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-1-premier-lancement">Exercice #1 - Premier lancement</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partage-du-travail">Partage du travail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-communications-via-mpi">Les communications via MPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-de-donnees">Types de données</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-de-communications">Types de communications</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
