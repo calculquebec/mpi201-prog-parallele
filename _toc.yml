@@ -5,4 +5,5 @@ format: jb-book
 root: 0-a_propos
 chapters:
 - file: 1-introduction
+- file: 2-mpi
 - file: 99-references
