@@ -62,6 +62,8 @@
     <link rel="icon" href="_static/logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Références" href="99-references.html" />
+    <link rel="prev" title="Premiers pas avec MPI" href="2-mpi.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="fr"/>
   </head>
@@ -123,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -178,9 +178,10 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1-introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2-mpi.html">Premiers pas avec MPI</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Communications point-à-point</a></li>
 <li class="toctree-l1"><a class="reference internal" href="99-references.html">Références</a></li>
 </ul>
 
@@ -346,7 +347,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mpi-send-bloquant"><code class="docutils literal notranslate"><span class="pre">MPI_Send()</span></code> (bloquant)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mpi-recv-bloquant"><code class="docutils literal notranslate"><span class="pre">MPI_Recv()</span></code> (bloquant)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mpi-recv-bloquant"><code class="docutils literal notranslate"><span class="pre">MPI_Recv()</span></code> (bloquant)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemple-mpi-send-et-mpi-recv">Exemple - <code class="docutils literal notranslate"><span class="pre">MPI_Send</span></code> et <code class="docutils literal notranslate"><span class="pre">MPI_Recv</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-2-envoi-d-une-matrice">Exercice #2 - Envoi d’une matrice</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -418,12 +423,54 @@ viennent toujours par paires sur des processus différents</p></li>
 </li>
 </ul>
 <p>En Python :</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">objet</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">etiquette</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">objet</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">etiquette</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">etat</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">objet</span></code> : une variable ou une partie d’un objet modifiable</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">objet</span></code> : une variable ou une partie d’un objet modifiable,
+pour recevoir l’objet désérialisé</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code> : <code class="docutils literal notranslate"><span class="pre">MPI.ANY_SOURCE</span></code> (valeur par défaut) ou un rang précis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">etiquette</span></code> : <code class="docutils literal notranslate"><span class="pre">MPI.ANY_TAG</span></code> (valeur par défaut) ou un nombre précis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">etat</span></code> : <code class="docutils literal notranslate"><span class="pre">None</span></code> (valeur par défaut) ou objet de type <code class="docutils literal notranslate"><span class="pre">MPI.Status</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">.count</span></code> : nombre d’octets reçus</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.source</span></code> : rang de la source des données</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.tag</span></code> : étiquette du transfert</p></li>
 </ul>
+</li>
+</ul>
+<section id="exemple-mpi-send-et-mpi-recv">
+<h3>Exemple - <code class="docutils literal notranslate"><span class="pre">MPI_Send</span></code> et <code class="docutils literal notranslate"><span class="pre">MPI_Recv</span></code><a class="headerlink" href="#exemple-mpi-send-et-mpi-recv" title="Lien vers cette rubrique">#</a></h3>
+<p>Chaque processus a ses propres variables <code class="docutils literal notranslate"><span class="pre">a</span></code> et <code class="docutils literal notranslate"><span class="pre">b</span></code>.
+Le processus 2 envoie la valeur de son <code class="docutils literal notranslate"><span class="pre">a</span></code> vers
+le processus 0 qui reçoit cette valeur via son <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
+<p><img alt="Figure - Communication point à point" src="_images/mpi_point2point.svg" /></p>
+<p>En C :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">MPI_Send</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">746</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">MPI_Recv</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">746</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">etat</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>En Python :</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">proc</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">746</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">proc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">746</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="exercice-2-envoi-d-une-matrice">
+<h3>Exercice #2 - Envoi d’une matrice<a class="headerlink" href="#exercice-2-envoi-d-une-matrice" title="Lien vers cette rubrique">#</a></h3>
+<p>Votre objectif : envoyer une matrice 4x4 du processus 0 au processus 1 :</p>
+<ol class="arabic simple">
+<li><p>Dans le dossier <code class="docutils literal notranslate"><span class="pre">exercices</span></code>, éditez le fichier <code class="docutils literal notranslate"><span class="pre">send_matrix.c</span></code>
+(ou <code class="docutils literal notranslate"><span class="pre">.py</span></code>) pour programmer le transfert de la matrice</p></li>
+<li><p>Compilez le code et lancez-le avec deux (2) processus</p></li>
+</ol>
+</section>
 </section>
 </section>
 
@@ -457,6 +504,24 @@ viennent toujours par paires sur des processus différents</p></li>
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="2-mpi.html"
+       title="page précédente">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">précédent</p>
+        <p class="prev-next-title">Premiers pas avec MPI</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="99-references.html"
+       title="page suivante">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">suivant</p>
+        <p class="prev-next-title">Références</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -474,7 +539,11 @@ viennent toujours par paires sur des processus différents</p></li>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mpi-send-bloquant"><code class="docutils literal notranslate"><span class="pre">MPI_Send()</span></code> (bloquant)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mpi-recv-bloquant"><code class="docutils literal notranslate"><span class="pre">MPI_Recv()</span></code> (bloquant)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mpi-recv-bloquant"><code class="docutils literal notranslate"><span class="pre">MPI_Recv()</span></code> (bloquant)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemple-mpi-send-et-mpi-recv">Exemple - <code class="docutils literal notranslate"><span class="pre">MPI_Send</span></code> et <code class="docutils literal notranslate"><span class="pre">MPI_Recv</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-2-envoi-d-une-matrice">Exercice #2 - Envoi d’une matrice</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
