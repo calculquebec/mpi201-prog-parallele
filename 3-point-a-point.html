@@ -352,6 +352,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-2-envoi-d-une-matrice">Exercice #2 - Envoi d’une matrice</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eviter-les-situations-d-interblocage">Éviter les situations d’interblocage</a></li>
 </ul>
             </nav>
         </div>
@@ -379,7 +380,7 @@ viennent toujours par paires sur des processus différents</p></li>
 </ul>
 <section id="mpi-send-bloquant">
 <h2><code class="docutils literal notranslate"><span class="pre">MPI_Send()</span></code> (bloquant)<a class="headerlink" href="#mpi-send-bloquant" title="Lien vers cette rubrique">#</a></h2>
-<p>En C :</p>
+<p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.3.2">En <strong>C</strong></a> :</p>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">MPI_Send</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">envoi</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">compte</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Datatype</span><span class="w"> </span><span class="n">type</span><span class="p">,</span>
 <span class="w">             </span><span class="kt">int</span><span class="w"> </span><span class="n">dest</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">etiquette</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Comm</span><span class="w"> </span><span class="n">comm</span><span class="p">);</span>
 </pre></div>
@@ -391,7 +392,7 @@ viennent toujours par paires sur des processus différents</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">dest</span></code> : rang du processus recevant</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">etiquette</span></code> : nombre entier identifiant le type de transfert</p></li>
 </ul>
-<p>En Python :</p>
+<p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.send">En <strong>Python</strong></a> :</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">comm</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">objet</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">dest</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">etiquette</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -402,7 +403,7 @@ viennent toujours par paires sur des processus différents</p></li>
 </section>
 <section id="mpi-recv-bloquant">
 <h2><code class="docutils literal notranslate"><span class="pre">MPI_Recv()</span></code> (bloquant)<a class="headerlink" href="#mpi-recv-bloquant" title="Lien vers cette rubrique">#</a></h2>
-<p>En C :</p>
+<p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#subsection.3.2.4">En <strong>C</strong></a> :</p>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">MPI_Recv</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">recept</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">compte</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Datatype</span><span class="w"> </span><span class="n">type</span><span class="p">,</span>
 <span class="w">             </span><span class="kt">int</span><span class="w"> </span><span class="n">source</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">etiquette</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Comm</span><span class="w"> </span><span class="n">comm</span><span class="p">,</span>
 <span class="w">             </span><span class="n">MPI_Status</span><span class="w"> </span><span class="o">*</span><span class="n">etat</span><span class="p">);</span>
@@ -422,7 +423,7 @@ viennent toujours par paires sur des processus différents</p></li>
 </ul>
 </li>
 </ul>
-<p>En Python :</p>
+<p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.recv">En <strong>Python</strong></a> :</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">objet</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">etiquette</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">etat</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -445,7 +446,7 @@ pour recevoir l’objet désérialisé</p></li>
 Le processus 2 envoie la valeur de son <code class="docutils literal notranslate"><span class="pre">a</span></code> vers
 le processus 0 qui reçoit cette valeur via son <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
 <p><img alt="Figure - Communication point à point" src="_images/mpi_point2point.svg" /></p>
-<p>En C :</p>
+<p>En <strong>C</strong> :</p>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">MPI_Send</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">746</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
 <span class="p">}</span>
@@ -454,7 +455,7 @@ le processus 0 qui reçoit cette valeur via son <code class="docutils literal no
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>En Python :</p>
+<p>En <strong>Python</strong> :</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">proc</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
     <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">746</span><span class="p">)</span>
 <span class="k">elif</span> <span class="n">proc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -471,6 +472,31 @@ le processus 0 qui reçoit cette valeur via son <code class="docutils literal no
 <li><p>Compilez le code et lancez-le avec deux (2) processus</p></li>
 </ol>
 </section>
+</section>
+<section id="eviter-les-situations-d-interblocage">
+<h2>Éviter les situations d’interblocage<a class="headerlink" href="#eviter-les-situations-d-interblocage" title="Lien vers cette rubrique">#</a></h2>
+<p>Soit le code C suivant :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">MPI_Ssend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+<span class="w">    </span><span class="n">MPI_Recv</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">etat</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">MPI_Ssend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+<span class="w">    </span><span class="n">MPI_Recv</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">etat</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#page=70"><code class="docutils literal notranslate"><span class="pre">MPI_Ssend()</span></code></a>
+(ou <a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Send"><code class="docutils literal notranslate"><span class="pre">comm.Send()</span></code></a>
+en Python) est une version sans mémoire
+tampon, ce qui la rend toujours bloquante</p></li>
+<li><p>Dans le cas ci-haut, les deux processus attendent que l’autre
+fasse appel à <code class="docutils literal notranslate"><span class="pre">MPI_Recv</span></code>. Bref, ce code est <strong>erroné</strong>!</p></li>
+<li><p>Avec <code class="docutils literal notranslate"><span class="pre">MPI_Send</span></code> (ou <code class="docutils literal notranslate"><span class="pre">comm.send()</span></code> en Python), le code
+resterait à risque ; la quantité de mémoire tampon étant
+limitée, le code bloquera lors de l’échange de gros messages</p></li>
+</ul>
 </section>
 </section>
 
@@ -544,6 +570,7 @@ le processus 0 qui reçoit cette valeur via son <code class="docutils literal no
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-2-envoi-d-une-matrice">Exercice #2 - Envoi d’une matrice</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eviter-les-situations-d-interblocage">Éviter les situations d’interblocage</a></li>
 </ul>
   </nav></div>
 
