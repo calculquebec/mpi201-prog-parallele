@@ -38,15 +38,15 @@
     <!-- Array names -->
     <g
         transform="translate(200 32)" text-anchor="middle"
-        font-family="monospace" font-size="32" font-weight="bold">
+        font-family="monospace" font-size="24" font-weight="bold">
       <text x="-80">a</text>
       <text x="80" >b</text>
     </g>
 
     <!-- Process IDs -->
     <g
-        transform="translate(-152 24)" alignment-baseline="middle"
-        font-family="Arial" font-size="24" font-style="italic">
+        transform="translate(-152 20)" alignment-baseline="middle"
+        font-family="Arial" font-size="16" font-style="italic">
       <text y="48" >Processus 0 (dest.)</text>
       <text y="96" >Processus 1</text>
       <text y="144">Processus 2 (source)</text>
@@ -56,7 +56,7 @@
     <!-- Array values on left -->
     <g
         transform="translate(120 24)" alignment-baseline="middle" text-anchor="middle"
-        font-family="Arial" font-size="24">
+        font-family="Arial" font-size="20">
       <text y="48" >5</text>
       <text y="96" >8</text>
       <text y="144">3</text>
@@ -66,7 +66,7 @@
     <!-- Array values on right -->
     <g
         transform="translate(280 24)" alignment-baseline="middle" text-anchor="middle"
-        font-family="Arial" font-size="24">
+        font-family="Arial" font-size="20">
       <text y="48" >3</text>
       <text y="96" >?</text>
       <text y="144">?</text>
