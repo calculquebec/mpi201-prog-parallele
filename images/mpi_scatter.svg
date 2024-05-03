@@ -24,29 +24,17 @@
 
     <!-- Arrows -->
     <g transform="translate(240 16)">
-      <line x1="0" x2="112" stroke="black" y1="48" y2="48" />
-      <line x1="0" x2="112" stroke="black" y1="48" y2="96" />
-      <line x1="0" x2="112" stroke="black" y1="48" y2="144" />
-      <line x1="0" x2="112" stroke="black" y1="48" y2="192" />
-      <path d="M 112 48  l -9.6 -3.0  a 10 10, 0, 0 0, 6.6 12.6 Z" />
-
-      <line x1="0" x2="112" stroke="black" y1="96" y2="48" />
-      <line x1="0" x2="112" stroke="black" y1="96" y2="96" />
-      <line x1="0" x2="112" stroke="black" y1="96" y2="144" />
-      <line x1="0" x2="112" stroke="black" y1="96" y2="192" />
-      <path d="M 112 96  l -8.0 -6.0  a 10 10, 0, 0 0, 2.0 14.0 Z" />
-
       <line x1="0" x2="112" stroke="black" y1="144" y2="48" />
-      <line x1="0" x2="112" stroke="black" y1="144" y2="96" />
-      <line x1="0" x2="112" stroke="black" y1="144" y2="144" />
-      <line x1="0" x2="112" stroke="black" y1="144" y2="192" />
-      <path d="M 112 144  l -6.0 -8.0  a 10 10, 0, 0 0, -2.0 14.0 Z" />
+      <path d="M 112 48  l -9.6 3.0  a 10 10, 0, 0 0, 4.8 5.6 Z" />
 
-      <line x1="0" x2="112" stroke="black" y1="192" y2="48" />
-      <line x1="0" x2="112" stroke="black" y1="192" y2="96" />
-      <line x1="0" x2="112" stroke="black" y1="192" y2="144" />
-      <line x1="0" x2="112" stroke="black" y1="192" y2="192" />
-      <path d="M 112 192  l -3.0 -9.6  a 10 10, 0, 0 0, -6.6 12.6 Z" />
+      <line x1="0" x2="112" stroke="black" y1="144" y2="96" />
+      <path d="M 112 96  l -10 0  a 10 10, 0, 0 0, 3.6 7.2 Z" />
+
+      <line x1="0" x2="112" stroke="black" y1="144" y2="144" />
+      <path d="M 112 144  l -9.2 -4.0  a 10 10, 0, 0 0, 0.0 8.0 Z" />
+
+      <line x1="0" x2="112" stroke="black" y1="144" y2="192" />
+      <path d="M 112 192  l -6.4 -7.2  a 10 10, 0, 0 0, -3.6 7.2 Z" />
     </g>
 
     <!-- Right rectangles -->
@@ -59,16 +47,16 @@
 
     <!-- Array names -->
     <g
-        transform="translate(200 40)" text-anchor="middle"
-        font-family="monospace" font-size="32" font-weight="bold">
-      <text x="-32">A</text>
-      <text x="176" >B</text>
+        transform="translate(200 32)" text-anchor="middle"
+        font-family="monospace" font-size="24" font-weight="bold">
+      <text x="-32">a</text>
+      <text x="176">b</text>
     </g>
 
     <!-- Process IDs -->
     <g
-        transform="translate(-152 24)" alignment-baseline="middle"
-        font-family="Arial" font-size="24" font-style="italic">
+        transform="translate(-152 20)" alignment-baseline="middle"
+        font-family="Arial" font-size="16" font-style="italic">
       <text y="48" >Processus 0</text>
       <text y="96" >Processus 1</text>
       <text y="144">Processus 2 (racine)</text>
@@ -78,7 +66,7 @@
     <!-- Array values on left -->
     <g
         transform="translate(88 24)" alignment-baseline="middle" text-anchor="middle"
-        font-family="Arial" font-size="24">
+        font-family="Arial" font-size="20">
       <text y="48"><tspan x="80">?</tspan></text>
       <text y="96"><tspan x="80">?</tspan></text>
       <text y="144">
@@ -90,7 +78,7 @@
     <!-- Array values on right -->
     <g
         transform="translate(376 24)" alignment-baseline="middle" text-anchor="middle"
-        font-family="Arial" font-size="24">
+        font-family="Arial" font-size="20">
       <text y="48" >5</text>
       <text y="96" >8</text>
       <text y="144">3</text>
