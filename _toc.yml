@@ -6,4 +6,5 @@ root: 0-a_propos
 chapters:
 - file: 1-introduction
 - file: 2-mpi
+- file: 3-point-a-point
 - file: 99-references
