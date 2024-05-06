@@ -352,7 +352,13 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-2-envoi-d-une-matrice">Exercice #2 - Envoi d’une matrice</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eviter-les-situations-d-interblocage">Éviter les situations d’interblocage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eviter-les-situations-d-interblocage">Éviter les situations d’interblocage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-1">Solution 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-3-echange-de-vecteurs">Exercice #3 - Échange de vecteurs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-2">Solution 2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#communications-non-bloquantes">Communications non bloquantes</a></li>
 </ul>
             </nav>
         </div>
@@ -467,8 +473,8 @@ le processus 0 qui reçoit cette valeur via son <code class="docutils literal no
 <h3>Exercice #2 - Envoi d’une matrice<a class="headerlink" href="#exercice-2-envoi-d-une-matrice" title="Lien vers cette rubrique">#</a></h3>
 <p>Votre objectif : envoyer une matrice 4x4 du processus 0 au processus 1 :</p>
 <ol class="arabic simple">
-<li><p>Dans le dossier <code class="docutils literal notranslate"><span class="pre">exercices</span></code>, éditez le fichier <code class="docutils literal notranslate"><span class="pre">send_matrix.c</span></code>
-(ou <code class="docutils literal notranslate"><span class="pre">.py</span></code>) pour programmer le transfert de la matrice</p></li>
+<li><p>Dans le répertoire <code class="docutils literal notranslate"><span class="pre">exercices</span></code>, éditez le fichier <code class="docutils literal notranslate"><span class="pre">send_matrix.c</span></code>
+(ou <code class="docutils literal notranslate"><span class="pre">send_matrix.py</span></code>) pour programmer le transfert de la matrice</p></li>
 <li><p>Compilez le code et lancez-le avec deux (2) processus</p></li>
 </ol>
 </section>
@@ -496,6 +502,108 @@ fasse appel à <code class="docutils literal notranslate"><span class="pre">MPI_
 <li><p>Avec <code class="docutils literal notranslate"><span class="pre">MPI_Send</span></code> (ou <code class="docutils literal notranslate"><span class="pre">comm.send()</span></code> en Python), le code
 resterait à risque ; la quantité de mémoire tampon étant
 limitée, le code bloquera lors de l’échange de gros messages</p></li>
+</ul>
+<section id="solution-1">
+<h3>Solution 1<a class="headerlink" href="#solution-1" title="Lien vers cette rubrique">#</a></h3>
+<p>On change l’ordre des appels à <code class="docutils literal notranslate"><span class="pre">MPI_Ssend</span></code>
+et <code class="docutils literal notranslate"><span class="pre">MPI_Recv</span></code> sur un des deux processus :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">MPI_Ssend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+<span class="w">    </span><span class="n">MPI_Recv</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">etat</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">MPI_Recv</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">etat</span><span class="p">);</span>
+<span class="w">    </span><span class="n">MPI_Ssend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>On peut généraliser la technique à plus de processus :</p>
+<ul class="simple">
+<li><p>Les processus pairs commencent par envoyer</p></li>
+<li><p>Les processus impairs commencent par recevoir</p></li>
+</ul>
+</section>
+<section id="exercice-3-echange-de-vecteurs">
+<h3>Exercice #3 - Échange de vecteurs<a class="headerlink" href="#exercice-3-echange-de-vecteurs" title="Lien vers cette rubrique">#</a></h3>
+<p>L’objectif : échanger un petit vecteur de données.</p>
+<ol class="arabic simple">
+<li><p>Dans le répertoire <code class="docutils literal notranslate"><span class="pre">exercices</span></code>, éditez le fichier <code class="docutils literal notranslate"><span class="pre">exchange.c</span></code>
+(ou <code class="docutils literal notranslate"><span class="pre">exchange.py</span></code>) pour programmer l’échange de données</p></li>
+<li><p>Compilez le code et lancez-le avec deux (2) processus</p></li>
+</ol>
+</section>
+<section id="solution-2">
+<h3>Solution 2<a class="headerlink" href="#solution-2" title="Lien vers cette rubrique">#</a></h3>
+<p>On utilise des communications non bloquantes pour démarrer
+les transferts. Ainsi, même si l’envoi n’est pas terminé,
+on peut commencer la réception tout en évitant l’interblocage.</p>
+<p>Exemple en <strong>C</strong> :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">MPI_Isend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">requete</span><span class="p">);</span>
+<span class="w">    </span><span class="n">MPI_Recv</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">etat</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">MPI_Isend</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">requete</span><span class="p">);</span>
+<span class="w">    </span><span class="n">MPI_Recv</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INTEGER</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">etat</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">MPI_Wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">requete</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">etat</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Exemple en <strong>Python</strong> :</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">proc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">requete</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">isend</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">proc</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">requete</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">isend</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">requete</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="communications-non-bloquantes">
+<h2>Communications non bloquantes<a class="headerlink" href="#communications-non-bloquantes" title="Lien vers cette rubrique">#</a></h2>
+<p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#subsection.3.7.2">En <strong>C</strong></a> :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">MPI_Isend</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">envoi</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">compte</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Datatype</span><span class="w"> </span><span class="n">type</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">int</span><span class="w"> </span><span class="n">dest</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">etiquette</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Comm</span><span class="w"> </span><span class="n">comm</span><span class="p">,</span>
+<span class="w">              </span><span class="n">MPI_Request</span><span class="w"> </span><span class="o">*</span><span class="n">requete</span><span class="p">);</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">MPI_Irecv</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">recept</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">compte</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Datatype</span><span class="w"> </span><span class="n">type</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">int</span><span class="w"> </span><span class="n">source</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">etiquette</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Comm</span><span class="w"> </span><span class="n">comm</span><span class="p">,</span>
+<span class="w">              </span><span class="n">MPI_Request</span><span class="w"> </span><span class="o">*</span><span class="n">requete</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Il n’est pas nécessaire que l’envoi et la réception
+soient tous les deux bloquants ou non bloquants
+(toutes les combinaisons sont permises)</p></li>
+<li><p>Après l’appel à <code class="docutils literal notranslate"><span class="pre">MPI_Isend</span></code> ou <code class="docutils literal notranslate"><span class="pre">MPI_Irecv</span></code>,
+on doit utiliser l’argument <code class="docutils literal notranslate"><span class="pre">requete</span></code> pour
+s’assurer que la communication est complétée</p></li>
+</ul>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">MPI_Wait</span><span class="p">(</span><span class="n">MPI_Request</span><span class="w"> </span><span class="o">*</span><span class="n">requete</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_Status</span><span class="w"> </span><span class="o">*</span><span class="n">etat</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MPI_Wait</span></code> est bloquante.
+Elle retourne quand la communication liée à <code class="docutils literal notranslate"><span class="pre">requete</span></code> est terminée</p></li>
+<li><p>Quand la communication a terminé, on peut
+réutiliser les vecteurs transmis ou reçus</p></li>
+</ul>
+<p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html">En <strong>Python</strong></a> :</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">requete</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">isend</span><span class="p">(</span><span class="n">envoi</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">requete</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+<span class="n">requete</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">irecv</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">ANY_SOURCE</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">ANY_TAG</span><span class="p">)</span>
+<span class="n">recept</span> <span class="o">=</span> <span class="n">requete</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Lors de la réception, c’est
+<a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request.wait"><code class="docutils literal notranslate"><span class="pre">requete.wait()</span></code></a>
+qui retourne l’objet reçu</p></li>
 </ul>
 </section>
 </section>
@@ -570,7 +678,13 @@ limitée, le code bloquera lors de l’échange de gros messages</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-2-envoi-d-une-matrice">Exercice #2 - Envoi d’une matrice</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eviter-les-situations-d-interblocage">Éviter les situations d’interblocage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eviter-les-situations-d-interblocage">Éviter les situations d’interblocage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-1">Solution 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-3-echange-de-vecteurs">Exercice #3 - Échange de vecteurs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-2">Solution 2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#communications-non-bloquantes">Communications non bloquantes</a></li>
 </ul>
   </nav></div>
 
