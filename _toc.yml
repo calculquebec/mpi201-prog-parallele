@@ -7,4 +7,5 @@ chapters:
 - file: 1-introduction
 - file: 2-mpi
 - file: 3-point-a-point
+- file: 4-collectives
 - file: 99-references
