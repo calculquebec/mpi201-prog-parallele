@@ -1,0 +1,113 @@
+<svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .rect-bleu{fill: #00b8ff; stroke: black;}
+    .debug{fill:#ff0000;}
+  </style>
+
+  <defs>
+    <rect id="rectBleu" width="144" height="32" class="rect-bleu" />
+  </defs>
+
+  <!-- Debugging background - class could be "debug" or "" -->
+  <rect width="100%" height="100%" fill="None" class="" />
+
+  <!-- Contents -->
+  <g transform="translate(192 0)">
+    <!-- Left rectangles -->
+    <g>
+      <use href="#rectBleu" y="48" />
+      <use href="#rectBleu" y="96" />
+      <use href="#rectBleu" y="144" />
+      <use href="#rectBleu" y="192" />
+    </g>
+
+    <!-- Arrows -->
+    <g transform="translate(144 16)">
+      <line x1="0" x2="112" stroke="black" y1="48" y2="48" />
+      <line x1="0" x2="112" stroke="black" y1="48" y2="96" />
+      <line x1="0" x2="112" stroke="black" y1="48" y2="144" />
+      <line x1="0" x2="112" stroke="black" y1="48" y2="192" />
+      <path d="M 112 48  l -9.6 -3.0  a 10 10, 0, 0 0, 6.6 12.6 Z" />
+
+      <line x1="0" x2="112" stroke="black" y1="96" y2="48" />
+      <line x1="0" x2="112" stroke="black" y1="96" y2="96" />
+      <line x1="0" x2="112" stroke="black" y1="96" y2="144" />
+      <line x1="0" x2="112" stroke="black" y1="96" y2="192" />
+      <path d="M 112 96  l -8.0 -6.0  a 10 10, 0, 0 0, 2.0 14.0 Z" />
+
+      <line x1="0" x2="112" stroke="black" y1="144" y2="48" />
+      <line x1="0" x2="112" stroke="black" y1="144" y2="96" />
+      <line x1="0" x2="112" stroke="black" y1="144" y2="144" />
+      <line x1="0" x2="112" stroke="black" y1="144" y2="192" />
+      <path d="M 112 144  l -6.0 -8.0  a 10 10, 0, 0 0, -2.0 14.0 Z" />
+
+      <line x1="0" x2="112" stroke="black" y1="192" y2="48" />
+      <line x1="0" x2="112" stroke="black" y1="192" y2="96" />
+      <line x1="0" x2="112" stroke="black" y1="192" y2="144" />
+      <line x1="0" x2="112" stroke="black" y1="192" y2="192" />
+      <path d="M 112 192  l -3.0 -9.6  a 10 10, 0, 0 0, -6.6 12.6 Z" />
+    </g>
+
+    <!-- Right rectangles -->
+    <g transform="translate(256 0)">
+      <use href="#rectBleu" y="48" />
+      <use href="#rectBleu" y="96" />
+      <use href="#rectBleu" y="144" />
+      <use href="#rectBleu" y="192" />
+    </g>
+
+    <!-- Array names -->
+    <g
+        transform="translate(200 32)" text-anchor="middle"
+        font-family="monospace" font-size="24" font-weight="bold">
+      <text x="-128">a</text>
+      <text x="128" >b</text>
+    </g>
+
+    <!-- Process IDs -->
+    <g
+        transform="translate(-152 20)" alignment-baseline="middle"
+        font-family="Arial" font-size="16" font-style="italic">
+      <text y="48" >Processus 0</text>
+      <text y="96" >Processus 1</text>
+      <text y="144">Processus 2</text>
+      <text y="192">Processus 3</text>
+    </g>
+
+    <!-- Array values on left -->
+    <g
+        transform="translate(-8 24)" alignment-baseline="middle" text-anchor="middle"
+        font-family="Arial" font-size="20">
+      <text y="48">
+        <tspan x="32">4</tspan><tspan x="64">7</tspan><tspan x="96">2</tspan><tspan x="128">11</tspan>
+      </text>
+      <text y="96">
+        <tspan x="32">5</tspan><tspan x="64">8</tspan><tspan x="96">3</tspan><tspan x="128">12</tspan>
+      </text>
+      <text y="144">
+        <tspan x="32">6</tspan><tspan x="64">9</tspan><tspan x="96">4</tspan><tspan x="128">13</tspan>
+      </text>
+      <text y="192">
+        <tspan x="32">7</tspan><tspan x="64">10</tspan><tspan x="96">5</tspan><tspan x="128">14</tspan>
+      </text>
+    </g>
+
+    <!-- Array values on right -->
+    <g
+        transform="translate(248 24)" alignment-baseline="middle" text-anchor="middle"
+        font-family="Arial" font-size="20">
+      <text y="48">
+        <tspan x="32">4</tspan><tspan x="64">5</tspan><tspan x="96">6</tspan><tspan x="128">7</tspan>
+      </text>
+      <text y="96">
+        <tspan x="32">7</tspan><tspan x="64">8</tspan><tspan x="96">9</tspan><tspan x="128">10</tspan>
+      </text>
+      <text y="144">
+        <tspan x="32">2</tspan><tspan x="64">3</tspan><tspan x="96">4</tspan><tspan x="128">5</tspan>
+      </text>
+      <text y="192">
+        <tspan x="32">11</tspan><tspan x="64">12</tspan><tspan x="96">13</tspan><tspan x="128">14</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

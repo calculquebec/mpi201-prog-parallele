@@ -351,6 +351,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-de-donnees-avec-mpi-bcast">Diffusion de données avec <code class="docutils literal notranslate"><span class="pre">MPI_Bcast</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-de-donnees-avec-mpi-scatter">Distribution de données avec <code class="docutils literal notranslate"><span class="pre">MPI_Scatter</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regroupement-de-donnees-avec-mpi-gather">Regroupement de données avec <code class="docutils literal notranslate"><span class="pre">MPI_Gather</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regroupement-a-tous-avec-mpi-allgather">Regroupement à tous avec <code class="docutils literal notranslate"><span class="pre">MPI_Allgather</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transposition-globale-avec-mpi-alltoall">Transposition globale avec <code class="docutils literal notranslate"><span class="pre">MPI_Alltoall</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -451,6 +453,50 @@ utilise une fonction effectuant un <strong>regroupement</strong> :</p>
 </pre></div>
 </div>
 </section>
+<section id="regroupement-a-tous-avec-mpi-allgather">
+<h3>Regroupement à tous avec <code class="docutils literal notranslate"><span class="pre">MPI_Allgather</span></code><a class="headerlink" href="#regroupement-a-tous-avec-mpi-allgather" title="Lien vers cette rubrique">#</a></h3>
+<p>C’est l’équivalent de <code class="docutils literal notranslate"><span class="pre">MPI_Gather</span></code> + <code class="docutils literal notranslate"><span class="pre">MPI_Bcast</span></code>,
+mais en plus efficace :</p>
+<p><img alt="Figure MPI_Allgather" src="_images/mpi_allgather.svg" /></p>
+<p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.6.7">En <strong>C</strong></a> :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="c1">// int MPI_Allgather(</span>
+<span class="c1">//     void *envoi, int compte_envoi, MPI_Datatype type_envoi,</span>
+<span class="c1">//     void *recep, int compte_recep, MPI_Datatype type_recep,</span>
+<span class="c1">//     MPI_Comm comm)</span>
+
+<span class="n">ierr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MPI_Allgather</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span>
+<span class="w">                      </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.allgather">En <strong>Python</strong></a> :</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># allgather(envoi: Any) -&gt; list[Any]</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">allgather</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="transposition-globale-avec-mpi-alltoall">
+<h3>Transposition globale avec <code class="docutils literal notranslate"><span class="pre">MPI_Alltoall</span></code><a class="headerlink" href="#transposition-globale-avec-mpi-alltoall" title="Lien vers cette rubrique">#</a></h3>
+<p>C’est l’équivalent de <code class="docutils literal notranslate"><span class="pre">MPI_Scatter</span></code> * <code class="docutils literal notranslate"><span class="pre">MPI_Gather</span></code>,
+mais en plus efficace :</p>
+<p><img alt="Figure MPI_Alltoall" src="_images/mpi_alltoall.svg" /></p>
+<p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.6.8">En <strong>C</strong></a> :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="c1">// int MPI_Alltoall(</span>
+<span class="c1">//     void *envoi, int compte_envoi, MPI_Datatype type_envoi,</span>
+<span class="c1">//     void *recep, int compte_recep, MPI_Datatype type_recep,</span>
+<span class="c1">//     MPI_Comm comm)</span>
+
+<span class="n">ierr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MPI_Alltoall</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span>
+<span class="w">                     </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_INT</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.alltoall">En <strong>Python</strong></a> :</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># alltoall(envoi: Sequence[Any]) -&gt; list[Any]</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">alltoall</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -522,6 +568,8 @@ utilise une fonction effectuant un <strong>regroupement</strong> :</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-de-donnees-avec-mpi-bcast">Diffusion de données avec <code class="docutils literal notranslate"><span class="pre">MPI_Bcast</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribution-de-donnees-avec-mpi-scatter">Distribution de données avec <code class="docutils literal notranslate"><span class="pre">MPI_Scatter</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regroupement-de-donnees-avec-mpi-gather">Regroupement de données avec <code class="docutils literal notranslate"><span class="pre">MPI_Gather</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regroupement-a-tous-avec-mpi-allgather">Regroupement à tous avec <code class="docutils literal notranslate"><span class="pre">MPI_Allgather</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transposition-globale-avec-mpi-alltoall">Transposition globale avec <code class="docutils literal notranslate"><span class="pre">MPI_Alltoall</span></code></a></li>
 </ul>
 </li>
 </ul>
