@@ -643,11 +643,20 @@ tout en assurant le calcul global de <code class="docutils literal notranslate">
 <h3>Exemple - Intégration par la méthode des rectangles<a class="headerlink" href="#exemple-integration-par-la-methode-des-rectangles" title="Lien vers cette rubrique">#</a></h3>
 <p>Soit la fonction :</p>
 <div class="math notranslate nohighlight">
-\[f(x) = \sin^2{x \mathrm{e}^{-x}}\]</div>
+\[f(x) = \sin^2(x) \ \mathrm{e}^{-x}\]</div>
 <p>Calculons en parallèle une approximation de l’intégrale <span class="math notranslate nohighlight">\(I\)</span>
 de cette fonction dans l’intervalle allant de <span class="math notranslate nohighlight">\(0\)</span> à <span class="math notranslate nohighlight">\(\pi\)</span> :</p>
 <div class="math notranslate nohighlight">
-\[I = \int_{0}^{\pi} \sin^2{x \mathrm{e}^{-x}} \mathrm{d}x\]</div>
+\[I = \int_{0}^{\pi} \sin^2(x) \ \mathrm{e}^{-x} \mathrm{d}x
+    = 2(1 - \mathrm{e}^{-\pi}) / 5\]</div>
+<p>Pour ce faire, nous calculerons <span class="math notranslate nohighlight">\(N\)</span> rectangles de largeur
+<span class="math notranslate nohighlight">\(\Delta{}x = \pi / N\)</span> et d’abscisse <span class="math notranslate nohighlight">\(x_i = i\Delta{}x\)</span>,
+où <span class="math notranslate nohighlight">\(i\)</span> varie de <span class="math notranslate nohighlight">\(0\)</span> à <span class="math notranslate nohighlight">\(N - 1\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[I \approx \Sigma_{i=0}^{N-1} \sin^2(x_i) \ \mathrm{e}^{-x_i} \Delta{}x\]</div>
+<div class="math notranslate nohighlight">
+\[I \approx \Sigma_{i=0}^{N-1} \sin^2(i\pi/N) \ \mathrm{e}^{-i\pi/N} \pi / N\]</div>
+<p><img alt="Intégration par la méthode des rectangles" src="_images/integration-rectangles.png" /></p>
 </section>
 </section>
 </section>
