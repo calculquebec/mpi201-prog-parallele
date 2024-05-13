@@ -365,6 +365,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-de-l-espace-de-travail">Division de l’espace de travail</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemple-integration-par-la-methode-des-rectangles">Exemple - Intégration par la méthode des rectangles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-4-approximation-de-pi">Exercice #4 - Approximation de pi</a></li>
 </ul>
 </li>
 </ul>
@@ -637,26 +638,80 @@ tout en assurant le calcul global de <code class="docutils literal notranslate">
 <li><p>Pour <code class="docutils literal notranslate"><span class="pre">rank</span> <span class="pre">==</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">debut</span></code> vaudra effectivement <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
 <li><p>La <code class="docutils literal notranslate"><span class="pre">fin</span></code> de <code class="docutils literal notranslate"><span class="pre">rank</span></code> est le <code class="docutils literal notranslate"><span class="pre">debut</span></code> de <code class="docutils literal notranslate"><span class="pre">rank</span> <span class="pre">+</span> <span class="pre">1</span></code></p></li>
 <li><p>Pour <code class="docutils literal notranslate"><span class="pre">rank</span> <span class="pre">==</span> <span class="pre">size</span> <span class="pre">-</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">fin</span></code> vaudra effectivement <code class="docutils literal notranslate"><span class="pre">N</span></code></p></li>
-<li><p>Les itérations se font dans l’intervalle : <code class="docutils literal notranslate"><span class="pre">debut</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">i</span></code> &lt; <code class="docutils literal notranslate"><span class="pre">fin</span></code></p></li>
+<li><p>Les itérations se font dans l’intervalle : <code class="docutils literal notranslate"><span class="pre">debut</span></code> &lt;= <code class="docutils literal notranslate"><span class="pre">k</span></code> &lt; <code class="docutils literal notranslate"><span class="pre">fin</span></code></p></li>
 </ul>
 <section id="exemple-integration-par-la-methode-des-rectangles">
 <h3>Exemple - Intégration par la méthode des rectangles<a class="headerlink" href="#exemple-integration-par-la-methode-des-rectangles" title="Lien vers cette rubrique">#</a></h3>
-<p>Soit la fonction :</p>
+<p>Pour la fonction suivante :</p>
 <div class="math notranslate nohighlight">
 \[f(x) = \sin^2(x) \ \mathrm{e}^{-x}\]</div>
-<p>Calculons en parallèle une approximation de l’intégrale <span class="math notranslate nohighlight">\(I\)</span>
-de cette fonction dans l’intervalle allant de <span class="math notranslate nohighlight">\(0\)</span> à <span class="math notranslate nohighlight">\(\pi\)</span> :</p>
+<p>On souhaite calculer en parallèle une approximation de l’intégrale
+<span class="math notranslate nohighlight">\(I\)</span> de cette fonction dans l’intervalle allant de <span class="math notranslate nohighlight">\(0\)</span> à <span class="math notranslate nohighlight">\(\pi\)</span> :</p>
 <div class="math notranslate nohighlight">
 \[I = \int_{0}^{\pi} \sin^2(x) \ \mathrm{e}^{-x} \mathrm{d}x
     = 2(1 - \mathrm{e}^{-\pi}) / 5\]</div>
-<p>Pour ce faire, nous calculerons <span class="math notranslate nohighlight">\(N\)</span> rectangles de largeur
-<span class="math notranslate nohighlight">\(\Delta{}x = \pi / N\)</span> et d’abscisse <span class="math notranslate nohighlight">\(x_i = i\Delta{}x\)</span>,
-où <span class="math notranslate nohighlight">\(i\)</span> varie de <span class="math notranslate nohighlight">\(0\)</span> à <span class="math notranslate nohighlight">\(N - 1\)</span> :</p>
+<p>Pour ce faire, on calcule et additionne l’aire de <span class="math notranslate nohighlight">\(N\)</span>
+rectangles de largeur <span class="math notranslate nohighlight">\(\Delta{}x = \pi / N\)</span> et d’abscisse
+<span class="math notranslate nohighlight">\(x_k = k\Delta{}x\)</span>, où <span class="math notranslate nohighlight">\(k\)</span> varie de <span class="math notranslate nohighlight">\(0\)</span> à <span class="math notranslate nohighlight">\(N - 1\)</span> :</p>
 <div class="math notranslate nohighlight">
-\[I \approx \Sigma_{i=0}^{N-1} \sin^2(x_i) \ \mathrm{e}^{-x_i} \Delta{}x\]</div>
+\[I \approx \Sigma_{k=0}^{N-1} \sin^2(x_k) \ \mathrm{e}^{-x_k} \Delta{}x\]</div>
 <div class="math notranslate nohighlight">
-\[I \approx \Sigma_{i=0}^{N-1} \sin^2(i\pi/N) \ \mathrm{e}^{-i\pi/N} \pi / N\]</div>
-<p><img alt="Intégration par la méthode des rectangles" src="_images/integration-rectangles.png" /></p>
+\[I \approx \Sigma_{k=0}^{N-1} \sin^2(k\Delta{}x) \ \mathrm{e}^{-k\Delta{}x} \Delta{}x\]</div>
+<p><img alt="Intégration par la méthode des rectangles, avec N = 10 rectangles" src="_images/integration-rectangles.png" /></p>
+<p>Un <strong>code séquentiel</strong> en C aurait l’allure suivante :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="nf">integrale</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">debut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">fin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">somme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">debut</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">fin</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">sinCarre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">);</span>
+<span class="w">        </span><span class="n">somme</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sinCarre</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">somme</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Le même <strong>code en parallèle avec MPI</strong> aurait l’allure suivante :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="nf">integrale</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">debut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rank</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">size</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">fin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">size</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">somme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">somme_locale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">N</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">debut</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">fin</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">sinCarre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">);</span>
+<span class="w">        </span><span class="n">somme_locale</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sinCarre</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dx</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">MPI_Allreduce</span><span class="p">(</span><span class="o">&amp;</span><span class="n">somme_locale</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">somme</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_DOUBLE</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">MPI_SUM</span><span class="p">,</span><span class="w"> </span><span class="n">MPI_COMM_WORLD</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">somme</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="exercice-4-approximation-de-pi">
+<h3>Exercice #4 - Approximation de pi<a class="headerlink" href="#exercice-4-approximation-de-pi" title="Lien vers cette rubrique">#</a></h3>
+<p>Étant donné :</p>
+<div class="math notranslate nohighlight">
+\[\pi = 4 \times \frac{\pi}{4} = 4 \times \arctan(1)\]</div>
+<p>Et étant donné l’expansion de Taylor :</p>
+<div class="math notranslate nohighlight">
+\[\arctan(1) = \Sigma_{k=0}^{\infty} \frac{(-1)^k}{2k + 1}\]</div>
+<p>Il est donc possible d’approximer <span class="math notranslate nohighlight">\(\pi\)</span> au moyen de <span class="math notranslate nohighlight">\(n\)</span> termes :</p>
+<div class="math notranslate nohighlight">
+\[\pi \approx 4 \times \Sigma_{k=0}^{n} \frac{(-1)^k}{2k + 1}\]</div>
+<p>Avec :</p>
+<div class="math notranslate nohighlight">
+\[4 \times (-1)^k = 4 \times (1 - 2 \times (k \bmod 2)) = 4 - 8 \times (k \bmod 2)\]</div>
 </section>
 </section>
 </section>
@@ -741,6 +796,7 @@ où <span class="math notranslate nohighlight">\(i\)</span> varie de <span class
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-de-l-espace-de-travail">Division de l’espace de travail</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemple-integration-par-la-methode-des-rectangles">Exemple - Intégration par la méthode des rectangles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-4-approximation-de-pi">Exercice #4 - Approximation de pi</a></li>
 </ul>
 </li>
 </ul>
