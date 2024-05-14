@@ -366,6 +366,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-de-l-espace-de-travail">Division de l’espace de travail</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemple-integration-par-la-methode-des-rectangles">Exemple - Intégration par la méthode des rectangles</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-4-approximation-de-pi">Exercice #4 - Approximation de pi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-5-mesurer-le-temps-ecoule">Exercice #5 - Mesurer le temps écoulé</a></li>
 </ul>
 </li>
 </ul>
@@ -703,15 +704,64 @@ rectangles de largeur <span class="math notranslate nohighlight">\(\Delta{}x = \
 <p>Étant donné :</p>
 <div class="math notranslate nohighlight">
 \[\pi = 4 \times \frac{\pi}{4} = 4 \times \arctan(1)\]</div>
-<p>Et étant donné l’expansion de Taylor :</p>
+<p>Et étant donné
+<a class="reference external" href="https://fr.wikipedia.org/wiki/S%C3%A9rie_de_Taylor">l’expansion de Taylor</a> :</p>
 <div class="math notranslate nohighlight">
 \[\arctan(1) = \Sigma_{k=0}^{\infty} \frac{(-1)^k}{2k + 1}\]</div>
 <p>Il est donc possible d’approximer <span class="math notranslate nohighlight">\(\pi\)</span> au moyen de <span class="math notranslate nohighlight">\(n\)</span> termes :</p>
 <div class="math notranslate nohighlight">
-\[\pi \approx 4 \times \Sigma_{k=0}^{n} \frac{(-1)^k}{2k + 1}\]</div>
+\[\pi \approx 4 \times \Sigma_{k=0}^{n - 1} \frac{(-1)^k}{2k + 1}\]</div>
 <p>Avec :</p>
 <div class="math notranslate nohighlight">
 \[4 \times (-1)^k = 4 \times (1 - 2 \times (k \bmod 2)) = 4 - 8 \times (k \bmod 2)\]</div>
+<ul class="simple">
+<li><p>Dans le dossier <code class="docutils literal notranslate"><span class="pre">exercices</span></code>, éditez le fichier
+<code class="docutils literal notranslate"><span class="pre">pi_collect.c</span></code> (ou <code class="docutils literal notranslate"><span class="pre">pi_collect.py</span></code>)</p></li>
+<li><p>Utilisez <code class="docutils literal notranslate"><span class="pre">MPI_Bcast</span></code> (ou <code class="docutils literal notranslate"><span class="pre">bcast</span></code>) pour
+propager le nombre d’itérations</p></li>
+<li><p>Utilisez <code class="docutils literal notranslate"><span class="pre">MPI_Reduce</span></code> (ou <code class="docutils literal notranslate"><span class="pre">reduce</span></code>)
+pour calculer la somme finale</p></li>
+<li><p>Exemple d’utilisation de l’exécutable <code class="docutils literal notranslate"><span class="pre">pi</span></code> ou du script Python :</p></li>
+</ul>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span>srun<span class="w"> </span>-n<span class="w"> </span><span class="m">4</span><span class="w"> </span>./pi<span class="w"> </span>&lt;<span class="w"> </span>pi_collect.in
+<span class="c1"># OU</span>
+srun<span class="w"> </span>-n<span class="w"> </span><span class="m">4</span><span class="w"> </span>python<span class="w"> </span>pi_collect.py<span class="w"> </span>&lt;<span class="w"> </span>pi_collect.in
+</pre></div>
+</div>
+</section>
+<section id="exercice-5-mesurer-le-temps-ecoule">
+<h3>Exercice #5 - Mesurer le temps écoulé<a class="headerlink" href="#exercice-5-mesurer-le-temps-ecoule" title="Lien vers cette rubrique">#</a></h3>
+<ul class="simple">
+<li><p>Éditez <code class="docutils literal notranslate"><span class="pre">pi_collect.c</span></code> (ou <code class="docutils literal notranslate"><span class="pre">pi_collect.py</span></code>)
+pour mesurer le temps du calcul parallèle</p>
+<ul>
+<li><p>Seul le processus 0 devra calculer le temps écoulé</p></li>
+</ul>
+</li>
+</ul>
+<p>En <strong>C</strong> :</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="n">t1</span><span class="p">,</span><span class="w"> </span><span class="n">t2</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">t1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MPI_Wtime</span><span class="p">();</span>
+
+<span class="c1">// Calcul parallèle et communications</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">t2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MPI_Wtime</span><span class="p">();</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Temps = %.6f sec</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>En <strong>Python</strong> :</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">Wtime</span><span class="p">()</span>
+
+<span class="c1"># Calcul parallèle et communications</span>
+
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">Wtime</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Time = </span><span class="si">{</span><span class="n">t2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t1</span><span class="si">:</span><span class="s1">.6f</span><span class="si">}</span><span class="s1"> sec&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
@@ -797,6 +847,7 @@ rectangles de largeur <span class="math notranslate nohighlight">\(\Delta{}x = \
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#division-de-l-espace-de-travail">Division de l’espace de travail</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exemple-integration-par-la-methode-des-rectangles">Exemple - Intégration par la méthode des rectangles</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-4-approximation-de-pi">Exercice #4 - Approximation de pi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercice-5-mesurer-le-temps-ecoule">Exercice #5 - Mesurer le temps écoulé</a></li>
 </ul>
 </li>
 </ul>
