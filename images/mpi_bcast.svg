@@ -1,6 +1,6 @@
 <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg">
   <style>
-    .rect-bleu{fill: #00b8ff; stroke: black;}
+    .rect-bleu{fill: #80d8ff; stroke: black;}
     .debug{fill:#ff0000;}
   </style>
 
