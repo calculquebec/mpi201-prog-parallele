@@ -8,4 +8,5 @@ chapters:
 - file: 2-mpi
 - file: 3-point-a-point
 - file: 4-collectives
+- file: 5-conclusion
 - file: 99-references
