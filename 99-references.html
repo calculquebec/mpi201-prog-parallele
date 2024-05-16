@@ -391,7 +391,7 @@ document.write(`
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>Concept</p></th>
 <th class="head text-left"><p>C/Fortran</p></th>
-<th class="head text-left"><p>Python</p></th>
+<th class="head text-left"><p>Python (<a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/index.html"><code class="docutils literal notranslate"><span class="pre">mpi4py</span></code></a>)</p></th>
 </tr>
 </thead>
 <tbody>
@@ -405,7 +405,111 @@ document.write(`
 </tr>
 <tr class="row-even"><td class="text-center"><p>Avortement</p></td>
 <td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#subsection.11.4.2"><code class="docutils literal notranslate"><span class="pre">MPI_Abort()</span></code></a></p></td>
-<td class="text-left"><p>S.O.</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">sys.exit(None)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Communicateur</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.11.2"><code class="docutils literal notranslate"><span class="pre">MPI_COMM_WORLD</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.COMM_WORLD.html"><code class="docutils literal notranslate"><span class="pre">MPI.COMM_WORLD</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Rang</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#page=362"><code class="docutils literal notranslate"><span class="pre">MPI_Comm_rank</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Get_rank"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.Get_rank</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Nombre de processus</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#subsection.7.4.1"><code class="docutils literal notranslate"><span class="pre">MPI_Comm_size</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Get_size"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.Get_size</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Concept</p></th>
+<th class="head text-left"><p>C/Fortran</p></th>
+<th class="head text-left"><p>Python (<a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/index.html"><code class="docutils literal notranslate"><span class="pre">mpi4py</span></code></a>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Types de données</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#page=76"><code class="docutils literal notranslate"><span class="pre">MPI_CHAR</span></code>, …</a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://fr.wikipedia.org/wiki/S%C3%A9rialisation">Sérialisation</a> automatique</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Envoi standard</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.3.2"><code class="docutils literal notranslate"><span class="pre">MPI_Send</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.send"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.send</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Envoi bloquant</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#page=70"><code class="docutils literal notranslate"><span class="pre">MPI_Ssend</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.Send"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.Send</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Réception (bloquante)</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#subsection.3.2.4"><code class="docutils literal notranslate"><span class="pre">MPI_Recv</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.recv"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.recv</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Envoi non-bloquant</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#subsection.3.7.2"><code class="docutils literal notranslate"><span class="pre">MPI_Isend</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.isend"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.isend</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Réception non-bloquante</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#page=117"><code class="docutils literal notranslate"><span class="pre">MPI_Irecv</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.irecv"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.irecv</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Attendre la communication</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#subsection.3.7.3"><code class="docutils literal notranslate"><span class="pre">MPI_Wait</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Request.html#mpi4py.MPI.Request.wait"><code class="docutils literal notranslate"><span class="pre">MPI.Request.wait</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Concept</p></th>
+<th class="head text-left"><p>C/Fortran</p></th>
+<th class="head text-left"><p>Python (<a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/index.html"><code class="docutils literal notranslate"><span class="pre">mpi4py</span></code></a>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>Diffusion</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.6.4"><code class="docutils literal notranslate"><span class="pre">MPI_Bcast</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.bcast"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.bcast</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Distribution</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.6.6"><code class="docutils literal notranslate"><span class="pre">MPI_Scatter</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.scatter"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.scatter</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Regroupement</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.6.5"><code class="docutils literal notranslate"><span class="pre">MPI_Gather</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.gather"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.gather</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Regroupement à tous</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.6.7"><code class="docutils literal notranslate"><span class="pre">MPI_Allgather</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.allgather"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.allgather</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Transposition globale</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#section.6.8"><code class="docutils literal notranslate"><span class="pre">MPI_Alltoall</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.alltoall"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.alltoall</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Réduction</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#subsection.6.9.1"><code class="docutils literal notranslate"><span class="pre">MPI_Reduce</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.reduce"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.reduce</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Réduction et diffusion</p></td>
+<td class="text-left"><p><a class="reference external" href="https://www.mpi-forum.org/docs/mpi-4.1/mpi41-report.pdf#subsection.6.9.6"><code class="docutils literal notranslate"><span class="pre">MPI_Allreduce</span></code></a></p></td>
+<td class="text-left"><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/reference/mpi4py.MPI.Comm.html#mpi4py.MPI.Comm.allreduce"><code class="docutils literal notranslate"><span class="pre">MPI.Comm.allreduce</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
